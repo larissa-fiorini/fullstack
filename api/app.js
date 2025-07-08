@@ -9,18 +9,19 @@ const app = express();
 
 app.use(express.json());
 const allowedOrigins = [
+  'https://fullstack-eol3ds6pn-larissa-fiorinis-projects.vercel.app',
   'http://localhost:5000',
-  'https://fullstack-rqgj.onrender.com',
 ];
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
-    } else {
-      return callback(new Error('Not allowed by CORS'));
     }
+    return callback(new Error('Not allowed by CORS'));
   },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
