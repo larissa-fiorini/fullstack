@@ -9,7 +9,10 @@ const app = express();
 app.use(express.json());
 
 //Routes
-app.use('/api/users', userRouters);
+app.use('/users', userRouters);
+app.get('/', (req,res) => {
+    res.send('Welcome to the API')
+})
 
 //DB connection
 mongoose.connect(process.env.MONGO_URI, {
