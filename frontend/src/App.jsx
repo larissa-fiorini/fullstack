@@ -5,6 +5,7 @@ import './App.css'
 
 function App() {
   const token = import.meta.env.VITE_JWT_TOKEN;
+  console.log(token)
   const API_URL = import.meta.env.VITE_API_URL;
 
   const [users, setUsers] = useState([]);
@@ -38,19 +39,11 @@ function App() {
   if (error) return <p>Error: {error}</p>
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+    <div className='w-full mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8'>
+      <h1 className='text-blue-600 font-bold text-4xl'>My App</h1>
 
       <div>
-        <h2>Users from API:</h2>
+        <h2 className='font-bold text-2xl'>Users from API:</h2>
         {users.length === 0 ? (
           <p>No users found</p>
         ) : (
@@ -63,7 +56,7 @@ function App() {
           </ul>
         )}
       </div>
-    </>
+    </div>
   )
 }
 
