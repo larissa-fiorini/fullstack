@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const bcrypt = require('bcrypt')
 
 exports.getUsers = async (req,res) => {
     const users = await User.find();
@@ -6,7 +7,12 @@ exports.getUsers = async (req,res) => {
 };
 
 exports.createUser = async (req,res) => {
-    const newUser = new User(req.body);
+    const {name, email, password} = req.body;
+
+    const hashedPwd = await bcrypt.hash(password, 10);
+
+    const newUser = new User({name, email, password: hashedPwd});
+
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
 };
@@ -64,3 +70,4 @@ exports.updateUser = async (req,res) => {
         res.status(500).json({message: 'Server error.'});
     }
 }
+
