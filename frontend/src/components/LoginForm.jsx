@@ -31,7 +31,6 @@ export default function LoginForm() {
 
     if (res.ok) {
       localStorage.setItem("token", data.token)
-      localStorage.setItem("tokenAPI", token)
       localStorage.setItem("email", email)
       navigate("/dashboard");
     } else {
