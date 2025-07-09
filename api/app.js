@@ -13,6 +13,7 @@ const app = express();
 app.use(express.json());
 const allowedOrigins = [
   'https://fullstack-eol3ds6pn-larissa-fiorinis-projects.vercel.app',
+  'https://fullstack-pi-one.vercel.app/',
   'http://localhost:5000',
 ];
 
