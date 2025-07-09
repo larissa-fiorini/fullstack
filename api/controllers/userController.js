@@ -49,6 +49,21 @@ exports.getUser = async (req, res) => {
     }
 }
 
+exports.getUserByEmail = async (req, res) => {
+    try{
+        const userEmail = req.body.email;
+        const findUser = await User.findOne({ email: userEmail });
+
+        if (!findUser) {
+            return res.status(404).json({message: 'User not found'});
+        }
+        res.json({message: 'User find successfully.', user: findUser});
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({message: 'Server error.'});
+    }
+}
+
 exports.updateUser = async (req,res) => {
     try {
         const userId = req.params.id;

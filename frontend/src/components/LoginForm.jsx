@@ -31,6 +31,8 @@ export default function LoginForm() {
 
     if (res.ok) {
       localStorage.setItem("token", data.token)
+      localStorage.setItem("tokenAPI", token)
+      localStorage.setItem("email", email)
       navigate("/dashboard");
     } else {
       alert("Login failed")
@@ -41,9 +43,8 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm"
+      className="bg-slate-400 p-6 rounded-lg shadow-md w-full max-w-sm"
     >
-      <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
 
       <div className="mb-4">
         <label className="block text-gray-700 mb-1">Email</label>
@@ -69,7 +70,7 @@ export default function LoginForm() {
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+        className="w-full md:w-32 bg-sky-600 text-white py-2 rounded-md hover:bg-sky-900 transition">
         Log In
       </button>
     </form >
