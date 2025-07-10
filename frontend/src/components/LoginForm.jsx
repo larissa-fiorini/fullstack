@@ -4,21 +4,22 @@ import { useNavigate } from "react-router-dom";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const token = import.meta.env.VITE_JWT_TOKEN;
+  const token_api = import.meta.env.VITE_JWT_TOKEN;
   const API_URL = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
-
     console.log(email)
     console.log(password)
 
     const res = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token_api}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -32,9 +33,11 @@ export default function LoginForm() {
     if (res.ok) {
       localStorage.setItem("token", data.token)
       localStorage.setItem("email", email)
+      setLoading(false);
       navigate("/dashboard");
     } else {
       alert("Login failed")
+      console.error(error);
     }
 
   }
@@ -69,8 +72,32 @@ export default function LoginForm() {
 
       <button
         type="submit"
+        disabled={loading}
         className="w-full md:w-32 bg-sky-600 text-white py-2 rounded-md hover:bg-sky-900 transition">
-        Log In
+        {loading ? (
+          <svg
+            className="animate-spin h-5 w-5 text-white mx-auto"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 018 8z"
+            />
+          </svg>
+        ) : (
+          'Login'
+        )}
       </button>
     </form >
   )

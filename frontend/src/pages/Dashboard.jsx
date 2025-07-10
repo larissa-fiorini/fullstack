@@ -25,25 +25,29 @@ export default function Dashboard() {
 
     console.log("Email to fetch:", email);
 
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${API_URL}/users/${email}`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${tokenAPI}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ email })
-        });
+    const fetchData = async (retries = 3) => {
+      for (let i = 0; i < retries; i++) {
+        try {
+          const response = await fetch(`${API_URL}/users/${email}`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${tokenAPI}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+          });
 
-        const data = await response.json();
-        setUsername(data.user.name);
+          const data = await response.json();
+          setUsername(data.user.name);
 
-      } catch (error) {
-        setUsername('failed');
-        console.error("Fetch error:", error);
-      }
-    };
+        } catch (error) {
+          if (i === retries - 1) setUsername('failed');
+          console.error("Fetch error:", error);
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+
+      };
+    }
 
     fetchData();
 
