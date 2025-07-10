@@ -36,8 +36,10 @@ export default function LoginForm() {
       setLoading(false);
       navigate("/dashboard");
     } else {
+      setEmail("")
+      setPassword("")
+      setLoading(false);
       alert("Login failed")
-      console.error(error);
     }
 
   }

@@ -18,7 +18,11 @@ export default function Dashboard() {
     if (storedToken) {
       setToken(storedToken);
     }
+    if (token != "") {
+      navigate("/login")
+    }
   }, []);
+
 
   useEffect(() => {
     if (!email) return;
